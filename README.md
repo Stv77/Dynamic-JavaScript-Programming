@@ -470,3 +470,95 @@ console.log(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa
 ```
 
 </details>
+
+# <b>Fib Tabulation</b>
+<details>
+<h3><b>Question</b></h3>
+<blockquote>
+<p>Write a function `fib(n)` that takes in a number as an argument.
+The function should return the n-th number of the Fibonacci sequence.</p>
+
+<p>The Oth number of the sequence is 0.</p>
+
+<p>The 1st number of the sequence is 1.</p>
+
+<p>To generate the next number of the sequence, we sum the previous two.</p>
+
+<p><code><abbr title="index">n: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...</abbr></code></p>
+<p><code>fib(n): 0, 1, 1, 2, 3, 5, 8, 13, 21, 34,</code></p>
+
+</blockquote>
+
+
+<p><a href="https://yourbasic.org/algorithms/dynamic-programming-explained/#:~:text=Tabulation%20is%20an%20approach%20where,the%20results%20in%20this%20table."><abbr title="an approach where you solve a dynamic programming problem by first filling up a table, and then compute the solution to the original problem based on the results in this table (3:11:51)">Tabulation</a></abbr> is all about building a table. So let's take a look at tabulation with the fib of six which we know from the index above, fib of 6 is 8.</p>
+
+<img src="https://i.postimg.cc/vB8hMZfD/tabulation.png" width="1078" height="544" class="center"></img>
+
+<p>We add the current index, for example index 0 with the value of 0, to the next 2 indexes before it. And the next index 1 with the value 1 to the 2 indexes before it. So on and so forth. The reason there is a fibonacci number is used to contribute to the sum of for the next two numbers before. But at the end of the iteration, we just sum up and look at one of the number because we don't want to step out of bound.</p>
+
+<p>The difference between this tabulation with the recursive is we just iterate through/iterative process. Therefore, both time and space complexities of this are just O(n). But, although the iterative strategy we use here looks completely different from the recursive one, the logic really carries over from the recursive. For example, I know every index of this array really corresponds to some number input for fib of n. So i can visualize it like this.</p>
+<img src="https://i.postimg.cc/gjDrRzLf/relation-of-tabulation-with-recursive.png" width="841" height="242"></img>
+
+<h3><b>The code</b></h3>
+
+```
+const fib = (n) => {
+  const table = Array(n + 1).fill(0);
+  table[1] = 1;
+  for(let i = 0; i <= n; i++) {
+    table[i+1] += table[i];
+    table[i+2] += table[i];
+  }
+  return table[n];
+};
+
+console.log(fib(6)); //8
+console.log(fib(7)); //13
+console.log(fib(8)); //21
+console.log(fib(50)); //12586269025
+```
+</details>
+
+## gridTraveler tabulation
+<details>
+<img src="https://i.postimg.cc/c4VbkCdS/grid-Traveler-tabulation.png" width="858" height="638"></img>
+
+<p>At first, we know that (1,1) value is 1, so we put it first. After that we iterate through from <abbr title="3:25:27 - 3:26:31">left to right to left</abbr>.
+
+<p>If we look at the way we iterate through, the time complexity here really depends on dimension of the table. I know that this table will have m rows and n columns. So i need to iterate through this table, it's going to take m*n (O(m*n)) time and space complexity. It's time to code it.</p>
+
+```
+//3:27:52 - 3:34:18
+const gridTravelerTab = (m, n) => {
+  const table = Array(m + 1) 
+    .fill()
+    .map(() => Array(n + 1).fill(0)); 
+    //will create new inner array instance with 0 from index m+1 & n+1
+
+  table[1][1] = 1;
+  for(let i = 0; i <= m; i++) {
+    for(let j = 0; j <= n; j++) {
+      const current = table[i][j];
+      if(j + 1 <= n) table[i][j + 1] += current;
+      if(i + 1 <= m) table[i + 1][j] += current;
+    }
+  }
+  return table[m][n];
+};
+
+console.log(gridTravelerTab(3, 2)); //3
+console.log(gridTravelerTab(3, 3)); //6
+console.log(gridTravelerTab(18, 18)); //2333606220
+```
+</details>
+
+## canSum tabulation
+<details>
+<p><b>Question</b>
+<blockquote><p> Write a function `canSum(targetSum, numbers)` that takes in a targetSum and an array of numbers as arguments.</p>
+<p>The function should return a boolean indicating whether or not it
+is possible to generate the targetSum using numbers from the array.</p>
+<p>You may use an element of the array as many times as needed.</p>
+<p>You may assume that all input numbers are nonnegative.</p></blockquote>
+
+</details>
