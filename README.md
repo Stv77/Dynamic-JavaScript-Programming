@@ -89,7 +89,7 @@ console.log(fib_memo(6));
 <img src="https://i.postimg.cc/Dwr5zCfr/lib-function.png"></img>
 </details>
 
-###Conclusion based on dib and lib function about <b>fib function</b>
+### Conclusion based on dib and lib function about <b>fib function</b>
 <details>
 <blockquote><img src="https://i.postimg.cc/Fs6rWZjQ/both-dib-and-lib-function-t-and-s-complexity.png"></img></blockquote>
 
