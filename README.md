@@ -1,4 +1,4 @@
-# Dynamic-JavaScript-Programming
+# <a href="https://www.youtube.com/watch?v=oBt53YbR9Kk" target="_blank">Dynamic-JavaScript-Programming</a>
 
 ## Foo function:
 - O(n) <abbr title="10:49 the speed a function is processed">time</abbr> and <abbr title="12:37 stack space that our function calls">space</abbr> complexity <abbr title="a series or system of written symbols used to represent numbers, amounts, or elements in something such as music or mathematics">notations</abbr>
