@@ -157,7 +157,7 @@ console.log(bestSum(100, [1, 2, 5, 25])) //[25. 25. 25, 25]
 </details>
 <br>
 
-##canConstruct memoization
+## canConstruct memoization
 <details>
 <article><b><h3>The problem</h3></b></article>
 
