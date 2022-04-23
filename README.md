@@ -1,4 +1,42 @@
-# <a href="https://www.youtube.com/watch?v=oBt53YbR9Kk" target="_blank">Dynamic-JavaScript-Programming</a>
+<p>This is my note from a <a href="https://www.youtube.com/watch?v=oBt53YbR9Kk">freecodecamp's Dynamic programming</a> course. Feel free to read it through!</p>
+
+# <b>Fib Memoization</b>
+
+## Fib function
+<details>
+
+```
+/*
+Write a function 'fib(n)' that takes in a number as an argument. The function should return the n-th number of the fibonacci sequence.
+
+The 1st and 2nd number of sequence is 1. To generate the next number of the sequence, we sum the previous two.
+ex: 
+
+n     : 1, 2, 3, 4 ...
+fib(n): 1, 1, 2, 3 ...
+*/
+//fib reg
+const fib = (n) => {
+  if(n <= 2) return 1;
+  return fib(n - 1) + fib(n - 2);
+};
+
+console.log(fib(6));
+console.log(fib(7));
+console.log(fib(8));
+
+
+//fib memoization
+const fib_memo = (n, memo = {}) => {
+  if(n in memo) return memo[n];
+  if(n <= 2) return 1;
+  return fib_memo(n-1, memo) + fib(n-2, memo);
+}
+
+console.log(fib_memo(6));
+```
+
+</details>
 
 ## Foo function:
 - O(n) <abbr title="10:49 the speed a function is processed">time</abbr> and <abbr title="12:37 stack space that our function calls">space</abbr> complexity <abbr title="a series or system of written symbols used to represent numbers, amounts, or elements in something such as music or mathematics">notations</abbr>
@@ -25,7 +63,7 @@
       <p>Please note that the <a href="https://en.wikipedia.org/wiki/Big_O_notation"><abbr title="Big O notation is a mathematical notation that describes the limiting behavior of a function when the argument tends towards a particular value or infinity.">big O notation</abbr></a> was invented before the proof of the linear speedup theorem, and even before <a href="https://en.wikipedia.org/wiki/Turing_machine"><abbr title="A Turing machine is a mathematical model of computation that defines an abstract machine that manipulates symbols on a strip of tape according to a table of rules">Turing machines</abbr></a>.</p>
       <p>Also, the big O notation often gives an information independant of the multiplicative constant: "if I multiply the input by k, then the total computing time will not be multiplied by more than …".</p>
       <p>Finally, keep in mind that the linear speedup theorem gives a way to reduce the number of steps in the execution of a Turing Machine, but if you implement it on a real computer, it often also means that each step may be longer, so the real total time may not decrease.</p>
-      <p>The big O notation is a convenient way to compare <a href="https://en.wikipedia.org/wiki/Asymptotic_computational_complexity"><abbr title="asymptotic computational complexity is the usage of asymptotic analysis for the estimation of computational complexity of algorithms and computational problems, commonly associated with the usage of the big O notation.">asymptotic time complexity</abbr></a>, but it is not always sufficient. For example, mergesort have an asymptotic complexity Θ(nlogn), but considering the multiplicative constant, it is often better to use insertion sort to sort small data, even if the asymptotic complexity of insertion sort is O(n<sup>2</sup>) in average. Another example are <a href="https://en.wikipedia.org/wiki/Fibonacci_heap#Worst_case">Fibonacci heaps</a>.</p>
+      <p>The big O notation is a convenient way to compare <a href="https://en.wikipedia.org/wiki/Asymptotic_computational_complexity"><abbr title="asymptotic computational complexity is the usage of asymptotic analysis for the estimation of computational complexity of algorithms and computational problems, commonly associated with the usage of the big O notation.">asymptotic time complexity</abbr></a>, but it is not always sufficient. For example, mergesort have an asymptotic complexity Θ(nlogn), but considering the multiplicative constant, it is often better to use insertion sort to sort small data, even if the asymptotic complexity of insertion sort is Θ(n2) in average. Another example are <a href="https://en.wikipedia.org/wiki/Fibonacci_heap#Worst_case">Fibonacci heaps</a>.</p>
 
 </details>
 
@@ -51,7 +89,7 @@
 <img src="https://i.postimg.cc/Dwr5zCfr/lib-function.png"></img>
 </details>
 
-### Conclusion based on dib and lib function about <b>fib function</b>
+###Conclusion based on dib and lib function about <b>fib function</b>
 <details>
 <blockquote><img src="https://i.postimg.cc/Fs6rWZjQ/both-dib-and-lib-function-t-and-s-complexity.png"></img></blockquote>
 
@@ -106,6 +144,26 @@
 <img src="https://i.postimg.cc/3RJr26tv/n-plus-m.png"></img>
 
 <p>There are two choices to move. First, to move down or right. That being said, we need to realize the height of this tree. The height of the tree is from the top level call we make (2,3) to the bottom level (1,1) or (0,2). So, either my argument hits (1,1) or one of my argument turns 0. But the farthest we can go is when my argument turns into (1,1). And i know from one node to the next, i will decrease n or m. I can't decrease them both because that way i will move diagonally which is prohibited in the game. So in that sense, from the bottom level to the top level, we know that to reach that top level we need to add n to the m. So we know that our time complexity is n + m and because from top to bottom we move exponentially or the number keeps increasing to the power of 2, the time complexity of gridTraveler is indeed O(2<sup>n+m</sup>) and the maximal stack depth of the tree comes from the height of the tree which is n + m, therefore its space complexity is O(n+m).</p>
+
+<h3><b>Final code</b></h3>
+
+```
+const gridTraveler = (m , n, memo={}) => {
+  const key = m + ',' + n;
+  if(key in memo) return memo[key];
+  if(m === 1 && n == 1) return 1;
+  if(m === 0 || n == 0) return 0;
+  memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n - 1, memo);
+  return memo[key];
+};
+
+console.log(gridTraveler(1,1)); //1
+console.log(gridTraveler(2,3)); //3
+console.log(gridTraveler(3,2)); //3
+console.log(gridTraveler(3,3)); //6
+console.log(gridTraveler(18,18)); //2333606220
+```
+
 </details>
 
 ## <abbr title="can you do it? (decision problem)">canSum</abbr>
@@ -116,12 +174,76 @@
 <p>First, we need to take a look at the height or levels of the tree. In the worst case, the distance from the root to the base case is exactly m because you need to substract one the m times. So the height of the tree is basically m.</p>
 
 <p>The branching factor of the tree is basically the lenght of the array. SO if the length of the array is 4, the branches of the tree is also 4. This is the same thing as saying, <i>we take n and multiply it by itself m times</i>. Therefore, the time complexity of canSum is O(n<sup>m</sup>) and the space complexity is basically just the height of the tree which is O(m).</p>
+
+<h3><b>Final code</b></h3>
+
+```
+const canSum = (targetSum, numbers, memo={}) => {
+  if(targetSum in memo) return memo[targetSum];
+  if(targetSum === 0) return true;
+  if(targetSum < 0) return false;
+  
+  for(let num of numbers) {
+    const remainder = targetSum - num;
+    if (canSum(remainder, numbers, memo) === true) {
+      memo[targetSum] = true;
+      return true;
+    }
+  }
+  memo[targetSum] = false;
+  return false;
+};
+
+console.log(canSum(7, [2,3])); //true
+console.log(canSum(7, [2,4])); //false
+console.log(canSum(300, [7, 14])); //false
+```
+
 </details>
 
 ## <abbr title="how will you do it? (combinatoric problem)">howSum</abbr>
 <details>
 <img src="https://i.postimg.cc/mrQLy3QQ/howSum.png"></img>
 <p>The time complexity of this howSum function is the same as the canSum function we have before which is O(n<sup>m</sup>), except we have another spreadsheet in our function or the <code>...remainderResult</code> there which basically create another copy of the array, so it needs to take a linear number of steps for it to copy an array. So it iterates through the remainding result and the maximum length of the remainderResult i would get back will be at most the m. Thus, the time complexity of it will be <code>O(n<sup>m</sup> * m)</code>. The memoized version of it will optimize the exponential part which is n<sup>m</sup>, even though we will still have the m<sup>2</sup> in space complexity but it is still sufficient in the time complexity.</p>
+
+<h3><b>Final code</b></h3>
+
+```
+const howSum = (targetSum, numbers, memo={}) => {
+  if(targetSum in memo) return memo[targetSum];
+  if(targetSum === 0) return [];
+  if(targetSum < 0) return null;
+  
+  for(let num of numbers) {
+    const remainder = targetSum - num;
+    const remainderResult = howSum(remainder, numbers, memo);
+    if(remainderResult !== null) {
+      memo[targetSum] = [...remainderResult, num];
+      return memo[targetSum];
+    }
+  }
+  memo[targetSum] = null;
+  return null;
+}
+
+/*
+m = target sum
+n = numbers.length
+
+Brute Force
+time: O(n^m * m)
+space: O(m)
+
+Memoized
+time: O(n * m^2)
+space: O(m^2)
+*/
+
+console.log(howSum(7, [2,3])); //[3,2,2]
+console.log(howSum(7, [2,4])); //null
+console.log(howSum(300, [7, 14])); //null
+```
+
 </details>
 
 ## <abbr title="How is the best way to do it? (optimization problem) Ex. bestSum(7, [5, 3, 4, 7]) -> 7 (the shortest way possible)">bestSum</abbr>
@@ -155,7 +277,6 @@ console.log(bestSum(100, [1, 2, 5, 25])) //[25. 25. 25, 25]
 ```
 
 </details>
-<br>
 
 ## canConstruct memoization
 <details>
@@ -174,7 +295,7 @@ console.log(bestSum(100, [1, 2, 5, 25])) //[25. 25. 25, 25]
 
 <p>The question is can you construct abcdef using the elements of the array. Looking at the array you can construct 'abcdef' using 'abc' + 'def', so the answer is true because, at least, there is one way to construct 'abcdef' here.</p>
 
-<h3><b>The complete code</b></h3>
+<h3><b>Code</b></h3>
 
 ```
 console.log("This is canConstruct")
@@ -222,10 +343,130 @@ target.slice(word.length) //ato
 <p>Based on that understanding, if we look at our code, it's even clearer that when we slice on <code>line 6</code>, it returns a new string and that new string is going to tend to be of length m or <code>target.slice(word.length)</code>. So, on every call to canConstruct, we are creating a new string and we need to maintain the recursion before i actually return on the <code>line 8</code>. Based on that, we know that each of m stack frame will have to store a string of length m. <b>It means <code>m * m</code> in space complexity of m<sup>2</sup></b>. Look at the image below to have a better understanding.</p> 
 <center><b><h3>Time and space complexity</h3></b></center>
 <img src="https://i.postimg.cc/1XKrJds1/can-Construct-complete-time-and-space-complexity.png"></img>
+
+<h3><b>Memoized code</b></h3>
+
+```
+const canConstruct = (target, wordBank, memo={}) => {
+  if(target in memo) return memo[target];
+  if(target === '') return true;
+  //iterate through all of the words
+  for (let word of wordBank) {
+    if(target.indexOf(word) === 0) {
+      //the way to check if some substring is a prefix of another string
+      const suffix = target.slice(word.length); //2:25:18
+      if(canConstruct(suffix, wordBank, memo) === true) {
+        memo[target] = true;
+        return true;
+      }
+    }
+  }
+  memo[target] = false;
+  return false;
+};
+
+console.log(canConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"])); //true
+console.log(canConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])); //false
+console.log(canConstruct("enterapotentpot", ["a", "p", "ent", "enter", "ot", "o", "t"])); // true
+console.log(canConstruct("eeeeeeeeeeeeeeeeeeeeef", ["e", "ee", "eee", "eeee", "eeeee", "eeeeee"])); // false
+```
+
 </details>
 
 ## countConstruct
 <details>
 <img src="https://i.postimg.cc/zfTGxcTJ/count-Construct.png"></img>
 <p>The difference between this function with the canConstruct is beside we are look for ways to get the target word, we also need to return the total ways for words in the word bank to form the target word.</p>
+</details>
+
+## allConstruct
+<details>
+
+```
+const allConstruct = (target, wordBank) => {
+  if(target === '') return [[]];
+  
+  const result = []; //1D array
+
+  for (let word of wordBank) {
+    if(target.indexOf(word) === 0) {
+      const suffix = target.slice(word.length) //everything after the word
+      allConstruct(suffix, wordBank);
+      const suffixWays = allConstruct(suffix, wordBank);
+      const targetWays = suffixWays.map(way => [word,...way]); //2D array
+      result.push(...targetWays);
+    }
+  }
+  return result;
+};
+
+console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purp']));
+```
+<p>Just in case you're unfamiliar with <code>.map(...)</code> in JavaScript. Let's take a look at the example below.</p>
+
+```
+arr = [1,2,3,4]
+arr.map(el => el * 2) 
+//[ 2, 4, 6, 8 ]
+```
+
+<p>The original array is <code>[1, 2, 3, 4]</code> but after the elementary computation there, we get the <code>[2, 4, 6, 8 ]</code>, so it manipulates the array. So that's what the <code>const targetWays</code> is doing there.</p>
+
+<p>Here is another example to explain the <code>suffixWays</code>.</p>
+
+```
+suffixWays = [['xy', 'z'], ['x', 'yz']];
+suffixWays.map(way => ['a',..way])
+//['a', 'xyz', 'z'], ['a', 'x', 'yz']
+```
+
+<p>I get the additional 'a' inside of every array. That's what we're doing on that chunk of code.</p>
+
+<p>The <code>result.push(...targetWays)</code> code just push the array without making additional array inside of the array. Look at the example code below.</p>
+
+```
+arr = [1, 2, 3, 4]
+nums = [7, 8]
+arr.push(numbs)
+//[1,2,3,4 [7,8]]
+
+arr = [1,2,3,4]
+nums = [7,8]
+arr.push(...nums)
+//[1,2,3,4,7,8]
+```
+
+<p>It's time to memoize the code for more efficient way of solving this problem.</p>
+
+
+```
+const allConstruct = (target, wordBank, memo={}) => {
+  if(target in memo) return memo[target];
+  if(target === '') return [[]];
+  
+  const result = []; //1D array
+
+  for (let word of wordBank) {
+    if(target.indexOf(word) === 0) {
+      const suffix = target.slice(word.length) //everything after the word
+      const suffixWays = allConstruct(suffix, wordBank, memo);
+      const targetWays = suffixWays.map(way => [word,...way]); //2D array
+      result.push(...targetWays);
+    }
+  }
+  memo[target] = result
+  return result;
+};
+
+console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purp']));
+/*[
+  ["purp","le"],// [c
+  ["p","ur", "p","le"]
+  ["purp","le"]]
+]*/
+
+console.log(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa","aaaaa"])); //[]
+
+```
+
 </details>
