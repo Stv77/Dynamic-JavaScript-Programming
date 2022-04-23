@@ -562,4 +562,34 @@ is possible to generate the targetSum using numbers from the array.</p>
 <p>You may use an element of the array as many times as needed.</p>
 <p>You may assume that all input numbers are nonnegative.</p></blockquote>
 
+<img src="https://i.postimg.cc/BbSd5xwm/iterate-through-can-Sum-tabulation.png"></img>
+
+<p>The way we solve it is by generating an array with the length of targetSum + 1 and giving the value of false for each of the array. The reason why we create a table with the length of the target number because if we look at the inputs, we only have two input. First, the target number. Second, the array of the numbers. Which of those actually contribute to my initial table? The key insight is to think about what's going to change throughout the problem. If i can reuse the numbers of the array as many times as we need, so if i create an array with the size of the target number. Now, we can iterate though the number of the array until we reach the end of the index. If the end of the index is true, it means we know that it is possible to sum the numbers in the array and get the result of the target number.</p> 
+
+<p>We assign the target of 0 will always be true because we know that it is always possible to generate 0, no matter what elements in the array. And the rest of the index is false. Now let's code.</p>
+
+```
+const canSumTab = (targetSum, numbers) => {
+  const table = Array(targetSum + 1).fill(false);
+  table[0] = true;
+  for(let i = 0; i <= table.length; i++) {
+    if(table[i] === true) {
+      for(let num of numbers) {
+        table[i + num] = true;
+      }
+    }
+  }
+  return table[targetSum];
+}
+```
+<p>Do you notice anything wrong in the code? This code will run an infinite loop. Let's take a look at the code below for a better understanding.</p>
+
+```
+const arr = ['a', 'b', 'c'];
+arr[10] = 'x';
+console.log(arr);
+```
+
+<p>That <code>arr[10]</code>, even though it's out of bound will still be executed and to fill up the 'holes' before it's reaching up to the index of 10, it's return <code><7 empty items></code> in return which kind of unfortunate.</p>
+
 </details>
