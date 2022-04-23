@@ -1,4 +1,4 @@
-<p>This is my note from a <a href="https://www.youtube.com/watch?v=oBt53YbR9Kk">freecodecamp's Dynamic programming</a> course. Feel free to read it through!</p>
+<blockquote><i><small><p>This is my note from a <a href="https://www.youtube.com/watch?v=oBt53YbR9Kk">freecodecamp's Dynamic programming</a> course. Feel free to read it through!</p></small></i></blockquote>
 
 # <b>Fib Memoization</b>
 
