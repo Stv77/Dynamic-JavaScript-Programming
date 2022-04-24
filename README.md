@@ -564,7 +564,7 @@ is possible to generate the targetSum using numbers from the array.</p>
 
 <img src="https://i.postimg.cc/BbSd5xwm/iterate-through-can-Sum-tabulation.png"></img>
 
-<p>The way we solve it is by generating an array with the length of targetSum + 1 and giving the value of false for each of the array. The reason why we create a table with the length of the target number because if we look at the inputs, we only have two input. First, the target number. Second, the array of the numbers. Which of those actually contribute to my initial table? The key insight is to think about what's going to change throughout the problem. If i can reuse the numbers of the array as many times as we need, so if i create an array with the size of the target number. Now, we can iterate though the number of the array until we reach the end of the index. If the end of the index is true, it means we know that it is possible to sum the numbers in the array and get the result of the target number.</p> 
+<p>The way we solve it is by generating an array with the length of targetSum + 1 and giving the value of false for each of the array. The reason why we create a table with the length of the target number because if we look at the inputs, we only have two input. First, the target number. Second, the array of the numbers. Which of those actually contribute to my initial table? The key insight is to think about what's going to change throughout the problem. If i can reuse the numbers of the array as many times as we need, so if i create an array with the size of the target number. Now, we can iterate though the number of the array until we reach the end of the index and return the value.</p> 
 
 <p>We assign the target of 0 will always be true because we know that it is always possible to generate 0, no matter what elements in the array. And the rest of the index is false. Now let's code.</p>
 
@@ -594,4 +594,147 @@ console.log(arr);
 
 <p>The way to fix it is actually by changing the <code>i <= table.length</code> into <code>i <= targetSum</code> because we can actually stop once we reach the target.</p>
   
+</details>
+
+## howSum tabulation
+<details>
+
+```
+const howSum = (targetSum, numbers) => {
+  const table = Array(targetSum + 1).fill(null);
+  table[0] = [];
+
+  //time complexity -> O(m^2 * n)
+  //space complexity -> O(m^2)
+  for(let i = 0; i <= targetSum; i++) { //m.length
+    if(table[i] !== null) {
+      for(number of numbers) { //n.length
+        table[i + num] = [...table[i], num] //m.length
+      }
+    }
+  }
+  return table[targetSum];
+};
+
+console.log(howSum(7, [2, 3])); //[3, 2, 2]
+console.log(howSum(300, [7, 14])); //[3, 2, 2]
+```
+</details>
+
+##bestSum tabulation
+<details>
+
+```
+const bestSum = (targetSum, numbers) => {
+  const table = Array(targetSum + 1).fill(null);
+  table[0] = [];
+
+  for(let i = 0; i <= targetSum; i++) {
+    if(table[i] !== null) {
+      for(let num of numbers) {
+        const combination = [...table[i], num]
+        //storing the shortest combination
+        if(!table[i + num] || table[i+num].length > combination.length) {
+          table[i + num] = combination; //adding current number to table
+        }
+      }
+    }
+  }
+  return table[targetSum];
+}
+
+console.log(bestSum(100, [1,2,5,25])); //[25,25,25,25]
+```
+
+<p><abbr title="4:18:41">Little explanation</abbr>: in JavaScript, null is a falsy value. So, the <code>!table[i + num]</code> there is checking if the value is not false or in another word if it's true, then run it. And we also know that our algorithm will potentially run <abbr title="4:19:04">out of bound</abbr>, which means that could return <code>undefined</code> value and undefined is also a falsy value. The code we mentioned earlier also want to avoid that.</p>
+</details>
+
+## canConstruct tabulation
+<details>
+
+```
+//time O(m^2 * n)
+//space O(m)
+const canConstruct = (target, wordBank) => {
+  const table = Array(target.length + 1).fill(false);
+  table[0] = true;
+
+  for(let i = 0; i <= target.length; i++) {
+    if(table[i] === true) {
+      for(let word of wordBank) {
+        //matching word in position i (4:34:57)
+        if(target.slice(i, i + word.length) === word) {
+          table[i + word.length] = true;
+        }
+      }
+    }
+  }
+  return table[target.length];
+};
+
+
+console.log(canConstruct("abcdef", ["ab",  "abc", "cd", "def", "abcd"])); //true
+console.log(canConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])); // false
+console.log(canConstruct("enterapotentpot", ["a", "p", "ent", "enter", "ot", "o", "t"])); // true
+```
+</details>
+
+##countConstruct tabulation
+<details>
+
+```
+//time O(m^2 * n)
+//space O(m)
+
+const countConstruct = (target, wordBank) => {
+  const table = Array(target.length + 1).fill(0);
+  table[0] = 1;
+
+  for(let i = 0; i <= target.length; i++) {
+    for (let word of wordBank) {
+      if(target.slice(i, i + word.length) === word) {
+        table[i + word.length] += table[i];
+      }
+    }
+  }
+  return table[target.length];
+};
+
+console.log(countConstruct("eeeeeeeeeeeeeeeeeeeeef", ["eeee", "eeeee", "eeeeee"]));
+```
+
+</details>
+
+## allConstruct tabulation
+
+<details>
+
+<img src="https://i.postimg.cc/zDwVh3qB/all-Construct-tab.png"></img>
+
+```
+//m: target.length & n: wordBank.length
+//time ~O(n^m)
+//space ~O(n^m)
+
+const allConstruct = (target, wordBank) => {
+  const table = Array(target.length + 1)
+    .fill()
+    .map(() => []);
+  table[0] = [[]];
+
+  for(let i = 0; i <= target.length; i++) {
+    for(let word of wordBank) {
+      if(target.slice(i, i + word.length) === word) {
+        //5:06:14
+        const newCombinations = table[i].map(subArray => [...subArray, word]);
+        table[i + word.length].push(...newCombinations);
+      }
+    }
+  }
+  return table[target.length];
+};
+
+console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purp']));
+```
+
 </details>
