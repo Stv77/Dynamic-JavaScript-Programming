@@ -592,4 +592,6 @@ console.log(arr);
 
 <p>That <code>arr[10]</code>, even though it's out of bound will still be executed and to fill up the 'holes' before it's reaching up to the index of 10, it's return <code><7 empty items></code> in return which kind of unfortunate.</p>
 
+<p>The way to fix it is actually by changing the <code>i <= table.length</code> into <code>i <= targetSum</code> because we can actually stop once we reach the target.</p>
+  
 </details>
