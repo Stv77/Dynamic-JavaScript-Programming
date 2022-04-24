@@ -621,7 +621,7 @@ console.log(howSum(300, [7, 14])); //[3, 2, 2]
 ```
 </details>
 
-##bestSum tabulation
+## bestSum tabulation
 <details>
 
 ```
@@ -679,7 +679,7 @@ console.log(canConstruct("enterapotentpot", ["a", "p", "ent", "enter", "ot", "o"
 ```
 </details>
 
-##countConstruct tabulation
+## countConstruct tabulation
 <details>
 
 ```
