@@ -15,6 +15,7 @@ ex:
 n     : 1, 2, 3, 4 ...
 fib(n): 1, 1, 2, 3 ...
 */
+  
 //fib reg
 const fib = (n) => {
   if(n <= 2) return 1;
